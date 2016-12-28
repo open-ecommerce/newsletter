@@ -1,0 +1,24 @@
+Paste the following code to config file your project
+
+return [
+
+        ...
+
+        'components' => [
+        ]
+
+        ...
+
+        'modules' => [
+                'newsletter' => [
+                    'class' => 'app\modules\newsletter\Newsletter',
+                ],
+            ],
+}
+
+Paste the following code to Asset file your project
+public $css = [
+       ...
+        'frontend/modules/newsletter/css/spin.css',
+       ...
+    ];
