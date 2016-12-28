@@ -21,11 +21,23 @@ or add
 
 to the require section of your `composer.json` file.
 
-
 Usage
------
-
+-----config.php
+'modules' => [
+		---
+         
+        'newsletter' => [
+            'class' => 'tikaraj21\newsletter\Newsletter',
+        ],
+         ----
+	],
+	
+	1. __BaseUrl__/newsletter/group/index
+	2. __BaseUrl__/newsletter/mergefields
+	3. __BaseUrl__/newsletter/email-templates
+	4. __BaseUrl__/newsletter/main/mailcreate
+	5. __BaseUrl__/newsletter/main/sending
+	
 Once the extension is installed, simply use it in your code by  :
 
 ```php
-<?= \tikarj21\newsletter\AutoloadExample::widget(); ?>```
