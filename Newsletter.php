@@ -1,10 +1,10 @@
 <?php
 
-namespace tikaraj21\newsletter;
+namespace vendor\tikaraj21\newsletter;
 
 class Newsletter extends \yii\base\Module
 {
-    public $controllerNamespace = 'tikaraj21\newsletter\controllers';
+    public $controllerNamespace = 'vendor\tikaraj21\newsletter\controllers';
 
     public function init()
     {
