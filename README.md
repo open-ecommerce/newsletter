@@ -23,7 +23,8 @@ to the require section of your `composer.json` file.
 
 Usage
 -----config.php
-'modules' => [
+
+      'modules' => [
 		---
          
         'newsletter' => [
