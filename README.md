@@ -10,13 +10,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist tikarj21/yii2-newsletter "*"
+php composer.phar require --prefer-dist tikaraj21/yii2-newsletter "*"
 ```
 
 or add
 
 ```
-"tikarj21/newsletter": "*"
+"tikaraj21/newsletter": "*"
 ```
 
 to the require section of your `composer.json` file.
