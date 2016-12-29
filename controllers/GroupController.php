@@ -1,10 +1,10 @@
 <?php
 
-namespace vendor\tikaraj21\newsletter\controllers;
+namespace tikaraj21\newsletter\controllers;
 
 use Yii;
-use vendor\tikaraj21\newsletter\models\Group;
-use vendor\tikaraj21\newsletter\models\GroupSearch;
+use tikaraj21\newsletter\models\Group;
+use tikaraj21\newsletter\models\GroupSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

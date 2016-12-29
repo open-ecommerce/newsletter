@@ -1,11 +1,11 @@
 <?php
 
-namespace vendor\tikaraj21\newsletter\models;
+namespace tikaraj21\newsletter\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use vendor\tikaraj21\newsletter\models\Main;
+use tikaraj21\newsletter\models\Main;
 
 /**
  * EqueueSearch represents the model behind the search form about `app\models\Equeue`.

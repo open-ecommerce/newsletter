@@ -1,10 +1,10 @@
 <?php
 
-namespace vendor\tikaraj21\newsletter\controllers;
+namespace tikaraj21\newsletter\controllers;
 
 use Yii;
-use vendor\tikaraj21\newsletter\models\EmailSubscribers;
-use vendor\tikaraj21\newsletter\models\EmailSubscribersSearch;
+use tikaraj21\newsletter\models\EmailSubscribers;
+use tikaraj21\newsletter\models\EmailSubscribersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

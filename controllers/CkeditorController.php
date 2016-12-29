@@ -1,5 +1,5 @@
 <?php
-namespace vendor\tikaraj21\newsletter\controllers;
+namespace tikaraj21\newsletter\controllers;
 
 use Yii;
 use yii\web\Controller;

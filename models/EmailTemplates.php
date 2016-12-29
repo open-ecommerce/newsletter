@@ -1,6 +1,6 @@
 <?php
 
-namespace vendor\tikaraj21\newsletter\models;
+namespace tikaraj21\newsletter\models;
 
 use Yii;
 

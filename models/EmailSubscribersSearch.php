@@ -1,11 +1,11 @@
 <?php
 
-namespace vendor\tikaraj21\newsletter\models;
+namespace tikaraj21\newsletter\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use vendor\tikaraj21\newsletter\models\EmailSubscribers;
+use tikaraj21\newsletter\models\EmailSubscribers;
 
 /**
  * EmailSubscribersSearch represents the model behind the search form about `app\models\EmailSubscribers`.
