@@ -1,12 +1,12 @@
 {
-    "name": "tikarj21/newsletter",
+    "name": "tikaraj21/newsletter",
     "description": "newsletter",
     "type": "yii2-extension",
     "keywords": ["yii2","extension"],
     "license": "BSD-4-Clause",
     "authors": [
         {
-            "name": "tikarj21",
+            "name": "tikaraj21",
             "email": "tika.raj@bentraytech.com"
         }
     ],
@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "tikarj21\\newsletter\\": ""
+            "tikaraj21\\newsletter\\": ""
         }
     }
 }
