@@ -1,10 +1,10 @@
 <?php
 
-namespace tikaraj21\newsletter\controllers;
+namespace vendor\tikaraj21\newsletter\controllers;
 
 use Yii;
-use tikaraj21\newsletter\models\MergeFields;
-use tikaraj21\newsletter\models\MergeFieldsSearch;
+use vendor\tikaraj21\newsletter\models\MergeFields;
+use vendor\tikaraj21\newsletter\models\MergeFieldsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

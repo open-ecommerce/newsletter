@@ -28,7 +28,7 @@ Usage
 		---
          
         'newsletter' => [
-            'class' => 'tikaraj21\newsletter\Newsletter',
+            'class' => 'vendor\tikaraj21\newsletter\Newsletter',
         ],
          ----
 	],

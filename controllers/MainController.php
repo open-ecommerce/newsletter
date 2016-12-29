@@ -1,20 +1,20 @@
 <?php
-namespace tikaraj21\newsletter\controllers;
+namespace vendor\tikaraj21\newsletter\controllers;
 
 use Yii;
-use tikaraj21\newsletter\models\Main;
-use tikaraj21\newsletter\models\MainSearch;
+use vendor\tikaraj21\newsletter\models\Main;
+use vendor\tikaraj21\newsletter\models\MainSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
-use tikaraj21\newsletter\models\EmailSubscribers;
-use tikaraj21\newsletter\models\EmailTemplates;
-use tikaraj21\newsletter\models\MailStore;
+use vendor\tikaraj21\newsletter\models\EmailSubscribers;
+use vendor\tikaraj21\newsletter\models\EmailTemplates;
+use vendor\tikaraj21\newsletter\models\MailStore;
 use yii\filters\AccessControl;
-use tikaraj21\newsletter\models\Mailsetting;
+use vendor\tikaraj21\newsletter\models\Mailsetting;
 use app\models\Setting;
-use tikaraj21\newsletter\models\MailStoreSearch;
+use vendor\tikaraj21\newsletter\models\MailStoreSearch;
 
 /**
 

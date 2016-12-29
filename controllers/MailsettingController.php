@@ -1,9 +1,9 @@
 <?php
 
-namespace tikaraj21\newsletter\controllers;
+namespace vendor\tikaraj21\newsletter\controllers;
 
 use Yii;
-use tikaraj21\newsletter\models\Mailsetting;
+use vendor\tikaraj21\newsletter\models\Mailsetting;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
