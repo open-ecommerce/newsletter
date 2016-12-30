@@ -10,15 +10,15 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist tikaraj21/yii2-newsletter "*"
+php composer.phar require --prefer-dist tikarj21/yii2-newsletter "*"
 ```
 
 or add
 
 ```
-"tikaraj21/newsletter": "*"
+"tikarj21/newsletter": "*"
 ```
-
+ "yiisoft/yii2-swiftmailer": "~2.0.5",
 to the require section of your `composer.json` file.
 
 Usage
