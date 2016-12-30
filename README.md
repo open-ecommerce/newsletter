@@ -18,7 +18,7 @@ or add
 ```
 "tikarj21/newsletter": "*"
 ```
- "yiisoft/yii2-swiftmailer": "~2.0.5",
+
 to the require section of your `composer.json` file.
 
 Usage
@@ -32,6 +32,10 @@ Usage
         ],
          ----
 	],
+
+To use menu manager (optional). Execute yii migration here:
+```
+yii migrate --migrationPath=@tikaraj21/newsletter/migrations	
 	
 	1. __BaseUrl__/newsletter/group/index
 	2. __BaseUrl__/newsletter/mergefields
