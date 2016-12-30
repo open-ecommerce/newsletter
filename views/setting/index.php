@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\grid\GridView;
 use kartik\widgets;
-use app\models\Countries;
 use yii\helpers\ArrayHelper;
 use kartik\widgets\Alert;
 /* @var $this yii\web\View */
@@ -101,9 +100,7 @@ $this->title = 'Setting';
 		                                <div class="col-sm-4">
 		                                    <?= $form->field($email_setting['reply_to'], '[reply_to]setting_value')->textInput(['maxlength' => true, 'placeholder' => 'Reply To (ex- admin@gmail.com)']) ?>
 		                                </div>
-		                                <div class="col-sm-4">
-		                                    <?php // $form->field($email_setting['return_path'], '[return_path]setting_value')->textInput(['maxlength' => true, 'placeholder' => 'Return Path (ex- admin@gmail.com)']) ?>
-		                                </div>
+		                                
 		                            </div>
 		                        </div>
 		                       
@@ -127,12 +124,7 @@ $this->title = 'Setting';
 	                        <div class="col-sm-3">
 	                            <?= $form->field($setting['address'], '[address]value')->textInput() ?>
 	                        </div>
-	                        <div class="col-sm-3">
-	                            <?= $form->field($setting['country'], '[country]value')->dropDownList(
-	                        ArrayHelper::map(Countries::find()->select(['country_id','country_name'])->orderBy('country_name')->all(),'country_id','country_name'),
-	                        ['prompt'=>'Select Parent Menu']
-	                        ) ?>
-	                        </div>
+	                        
 	                        <div class="col-sm-3">
 	                             <?= $form->field($setting['phone'], '[phone]value')->textInput() ?>
 	                        </div>
@@ -145,27 +137,7 @@ $this->title = 'Setting';
       <div class="panel panel-default" style="margin-top: 10px;">
 		   <div class="panel-heading"><h4><i class="glyphicon glyphicon-cog"></i> <?= Html::encode('General Setting') ?></h4></div>
 		        <div class="panel-body">
-				<div class="setting-form">
-		                    <div class="row">
-		                        <div class="col-sm-3">
-		                             <?= $form->field($setting['date'], '[date]value')->inline()->radioList(['N'=>'Nepali','E'=>'English'])?>
-		                        </div>
-		                        <div class="col-sm-3">
-		                             <?= $form->field($setting['date_format'], '[date_format]value')->dropDownList(
-		                        [0=>'yyyy-MM-DD',1=>'DD-MM-yy',2=>'MM-DD-yy'],
-		                        ['prompt'=>'Select Date Format']
-		                        )?>
-		                        </div>
-		                        <div class="col-sm-3">
-		                             <?= $form->field($setting['time_zone'], '[time_zone]value')->dropDownList(
-                                        app\models\Setting::TimeZone(),
-		                        ['prompt'=>'Select Date Format']
-		                        )?>
-		                         
-		                        </div>
-                                  
-		                    </div>
-				</div>
+				
 		   </div>
 		</div>
     </div>
@@ -177,73 +149,3 @@ $this->title = 'Setting';
 </div>
 </div>
 <?php ActiveForm::end(); ?>
-<?php 
-$oprions = app\models\Setting::HtmlOption();
-$url = yii\helpers\Url::to(['get-months']);
-$script = <<< JS
-   //begining of code not to other format if nepali date is selected 
-   checkValue2 = $('#setting-date-value>label:first>input').is(':checked'); 
-       if(checkValue2){
-                 $('#setting-date_format-value').prop("disabled", true); // Element(s) are now disabled.
-        }
-          
-        
-$('.radio-inline').click(function(e){
-        if($('#setting-date-value>label:first>input').is(':checked')){
-                
-                $('#setting-date_format-value').val('0');
-                $('#setting-date_format-value').prop("disabled", true); // Element(s) are now disabled.
-                AjaxGet('nep');
-                $('#setting-leave_remaining_month-value').html(options);
-            }
-         if($('#setting-date-value>label:nth-child(2)>input').is(':checked')){
-                
-                $('#setting-date_format-value').prop("disabled", false); // Element(s) are now enabled.
-                AjaxGet('eng');
-                $('#setting-leave_remaining_month-value').html(options);
-            }
-    });
-//ending of code not to other format if nepali date is selected  
-    
-var checkValue = $('#mailsetting-sett_mail_type-setting_value>label:first>input').is(':checked'); 
-       if(checkValue){
-                $('.phpsetting').css("display","block");
-                $('.smtpsetting').css("display","none");
-        }
-        else{
-                $('.phpsetting').css("display","none");
-                $('.smtpsetting').css("display","block");
-        }
-        
-$('.radio-inline').click(function(e){
-         
-       var checkPHP = $('#mailsetting-sett_mail_type-setting_value>label:first>input').is(':checked'); 
-        if(checkPHP){
-                    
-                $('.phpsetting').css("display","block");
-                $('.smtpsetting').css("display","none");
-                    
-            }
-        else{
-                $('.phpsetting').css("display","none");
-                $('.smtpsetting').css("display","block");
-            }
-    });
-function AjaxGet(time){
-    $.ajax({
-        url:"{$url}",
-        type: 'post',
-        data: {
-                 _csrf:yii.getCsrfToken(),
-                 timeformat:time
-              },
-        success: function (result) {
-        $('#setting-leave_remaining_month-value').html(result);
-        return true;
-        }
-  }); 
-   
-}
-JS;
-$this->registerJs($script);
-?>

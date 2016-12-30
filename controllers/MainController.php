@@ -228,7 +228,6 @@ class MainController extends Controller
     public function actionMailcreate()
 
     {
-        if(Yii::$app->user->can('/*')){
                 $model = new Main();
                 if ($model->load(Yii::$app->request->post())) {
 
@@ -334,10 +333,7 @@ class MainController extends Controller
                     ]);
 
                 }    
-        }
-        else {
-            throw new \yii\web\ForbiddenHttpException;
-        }
+       
     }
     /**
      * Action for sending mail
@@ -346,7 +342,7 @@ class MainController extends Controller
     public function actionSendmail() {
         
 //        $setting = Mailsetting::find()->select(['setting_value'])->all();
-        if(Yii::$app->user->can('/*')){
+        
                 set_time_limit ( 300 );//default 5 minutes
         
                 if(Yii::$app->session->get('Number Mail Send At A Time')){
@@ -434,12 +430,6 @@ class MainController extends Controller
                 }
                 //echo $result;
                 return $result;
-        }
-        else{
-            throw new \yii\web\ForbiddenHttpException;
-        
-        }
-        
        
     }
     
@@ -520,7 +510,6 @@ class MainController extends Controller
      */
     public function actionSending(){
     	
-        if(Yii::$app->user->can('/*')){
                     $page_reload_intval = Mailsetting::find()->select(['setting_name','setting_value'])->where(['setting_id'=>1])->all();
 
                     if(isset($page_reload_intval[0]['setting_value'])){
@@ -554,11 +543,7 @@ class MainController extends Controller
                          'searchModel' => $searchModel,
                          'dataProvider' => $dataProvider,
                      ]);    
-        }
-        else{
-            throw new \yii\web\ForbiddenHttpException;
-        }
-        
+      
 
     }
     
@@ -578,7 +563,6 @@ class MainController extends Controller
 
     {
         
-        if(Yii::$app->user->can('/*')){
                 $model = new Main();
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
@@ -594,10 +578,7 @@ class MainController extends Controller
 
                 }
         }
-        else{
-            throw new \yii\web\ForbiddenHttpException;
-        }
-        
+      
 
     }
 
@@ -618,15 +599,9 @@ class MainController extends Controller
     public function actionDelete($id)
 
     {
-        if(Yii::$app->user->can('/*')){
             
             MailStore::findOne($id)->delete();
                 return $this->redirect(['sending']);
-        }
-        else{
-            throw new \yii\web\ForbiddenHttpException;
-        }
-
         
 
     }

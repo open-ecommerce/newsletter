@@ -44,7 +44,6 @@ class EmailSubscribersController extends Controller
      */
     public function actionIndex($group_id)
     {
-       if(Yii::$app->user->can('/*')){
             $searchModel = new EmailSubscribersSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$group_id);
 
@@ -53,11 +52,7 @@ class EmailSubscribersController extends Controller
                 'dataProvider' => $dataProvider,
                 'group_id'=>$group_id
             ]);
-       }
-       else{
-           throw new ForbiddenHttpException;
-       }
-       
+     
         
     }
 
@@ -68,16 +63,11 @@ class EmailSubscribersController extends Controller
      */
     public function actionView($id,$group_id)
     {
-        if(Yii::$app->user->can('/*')){
             return $this->render('view', [
             'model' => $this->findModel($id),
             'group_id'=>$group_id
             ]);
-        }
-        else{
-            throw new ForbiddenHttpException;
-        }
-        
+       
     }
 
     /**
@@ -87,7 +77,6 @@ class EmailSubscribersController extends Controller
      */
     public function actionCreate($group_id)
     {
-        if(Yii::$app->user->can('/*')){
             $model = new EmailSubscribers();
             if ($model->load(Yii::$app->request->post())) {
                 $model->group_id = $group_id;
@@ -99,10 +88,7 @@ class EmailSubscribersController extends Controller
                     'group_id'=>$group_id
                 ]);
             }
-        }
-        else{
-            throw new ForbiddenHttpException;
-        }
+       
     }
 
     /**
@@ -113,7 +99,6 @@ class EmailSubscribersController extends Controller
      */
     public function actionUpdate($id,$group_id)
     {
-         if(Yii::$app->user->can('/*')){
                 $model = $this->findModel($id);
                 if ($model->load(Yii::$app->request->post())) {
                    $model->group_id = $group_id;
@@ -125,10 +110,7 @@ class EmailSubscribersController extends Controller
                         'group_id'=>$group_id
                     ]);
                 }
-         }
-         else{
-            throw new ForbiddenHttpException;
-        }
+        
         
     }
 
@@ -140,14 +122,10 @@ class EmailSubscribersController extends Controller
      */
     public function actionDelete($id,$group_id)
     {
-      if(Yii::$app->user->can('/*')){
           $this->findModel($id)->delete();
 
          return $this->redirect(['index', 'group_id' =>$group_id]);
-      }
-      else{
-            throw new ForbiddenHttpException;
-        }
+      
         
     }
 

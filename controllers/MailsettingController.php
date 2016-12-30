@@ -66,7 +66,6 @@ class MailsettingController extends Controller
      */
     public function actionCreate()
     {
-        if(Yii::$app->user->can('/*')){
                 $model = new Automailsetting();
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -76,11 +75,7 @@ class MailsettingController extends Controller
                         'model' => $model,
                     ]);
                 }
-       }
-       else{
-           throw new ForbiddenHttpException;
-       }
-        
+      
     }
 
     /**
@@ -91,7 +86,6 @@ class MailsettingController extends Controller
      */
     public function actionUpdate()
     {
-        if(Yii::$app->user->can('/*')){
                 $sett_mail_type = Mailsetting::findOne(1);
                 $sett_mail_type->scenario = 'mail_type';
 
@@ -195,16 +189,7 @@ class MailsettingController extends Controller
                             'return_path'=>$return_path
                     ]);
                 }
-        }
-        else {
-                 throw new ForbiddenHttpException;
-        }
-        if(Yii::$app->user->can('/*')){
-            
-        }
-        else {
-                 throw new ForbiddenHttpException;
-        }
+        
         
     }
 
@@ -216,14 +201,10 @@ class MailsettingController extends Controller
      */
     public function actionDelete($id)
     {
-          if(Yii::$app->user->can('/*')){
                 $this->findModel($id)->delete();
 
                 return $this->redirect(['index']);
-          }
-          else{
-              throw  new ForbiddenHttpException;
-          }
+          
         
     }
 

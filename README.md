@@ -42,6 +42,7 @@ yii migrate --migrationPath=@tikaraj21/newsletter/migrations
 	3. __BaseUrl__/newsletter/email-templates
 	4. __BaseUrl__/newsletter/main/mailcreate
 	5. __BaseUrl__/newsletter/main/sending
+	6. __BaseUrl__/newsletter/setting/index
 	
 Once the extension is installed, simply use it in your code by  :
 

@@ -44,9 +44,6 @@ class GroupController extends Controller
     public function actionIndex()
     {
        
-       
-       
-        if(Yii::$app->user->can('/*')){
                 $searchModel = new GroupSearch();
                 $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -54,11 +51,7 @@ class GroupController extends Controller
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
                 ]);
-       }
-       else{
-           throw new ForbiddenHttpException;
-       }
-        
+     
     }
 
     /**
@@ -68,14 +61,10 @@ class GroupController extends Controller
      */
     public function actionView($id)
     {
-        if(Yii::$app->user->can('/*')){
                 return $this->render('view', [
                     'model' => $this->findModel($id),
                 ]);
-       }
-       else{
-           throw new ForbiddenHttpException;
-       }
+     
         
     }
 
@@ -86,7 +75,6 @@ class GroupController extends Controller
      */
     public function actionCreate()
     {
-        if(Yii::$app->user->can('/*')){
             $model = new Group();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -96,11 +84,7 @@ class GroupController extends Controller
                     'model' => $model,
                 ]);
             }
-       }
-       else{
-           throw new ForbiddenHttpException;
-       }
-        
+     
     }
 
     /**
@@ -111,7 +95,6 @@ class GroupController extends Controller
      */
     public function actionUpdate($id)
     {
-        if(Yii::$app->user->can('/*')){
                 $model = $this->findModel($id);
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -121,10 +104,7 @@ class GroupController extends Controller
                         'model' => $model,
                     ]);
                 }
-       }
-       else{
-           throw new ForbiddenHttpException;
-       }
+     
         
     }
 
@@ -136,14 +116,10 @@ class GroupController extends Controller
      */
     public function actionDelete($id)
     {
-        if(Yii::$app->user->can('/*')){
                 $this->findModel($id)->delete();
 
                 return $this->redirect(['index']);
-       }
-       else{
-           throw new ForbiddenHttpException;
-       }
+      
         
     }
 
