@@ -50,6 +50,8 @@ Usage
 To use menu manager (optional). Execute yii migration here:
 ```
 yii migrate --migrationPath=@tikaraj21/newsletter/migrations	
+or
+php yii migrate --migrationPath=@tikaraj21/newsletter/migrations	
 	
 	1. __BaseUrl__/newsletter/group/index
 	2. __BaseUrl__/newsletter/mergefields
