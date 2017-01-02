@@ -18,7 +18,7 @@ class Group extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'tbl_group';
+        return '{{%group}}';
     }
 
     /**

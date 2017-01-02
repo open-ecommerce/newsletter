@@ -25,7 +25,7 @@ class MailStore extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'tbl_mail_store';
+        return '{{%mail_store}}';
     }
 
     /**

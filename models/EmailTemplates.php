@@ -19,7 +19,7 @@ class EmailTemplates extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'tbl_email_templates';
+        return '{{%email_templates}}';
     }
 
     /**

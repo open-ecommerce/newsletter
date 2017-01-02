@@ -22,7 +22,7 @@ class EmailSubscribers extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'tbl_email_subscribers';
+        return '{{%email_subscribers}}';
     }
 
     /**

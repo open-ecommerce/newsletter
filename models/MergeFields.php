@@ -18,7 +18,7 @@ class MergeFields extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'tbl_merge_fields';
+        return '{{%merge_fields}}';
     }
 
     /**
