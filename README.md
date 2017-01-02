@@ -44,6 +44,9 @@ Usage
 
     ],
 	
+	if any problem use 
+	"yiisoft/yii2-swiftmailer": "~2.0.5",
+	
 To use menu manager (optional). Execute yii migration here:
 ```
 yii migrate --migrationPath=@tikaraj21/newsletter/migrations	
