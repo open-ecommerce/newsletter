@@ -33,6 +33,17 @@ Usage
          ----
 	],
 
+	and for mail sending use
+	'components' => [
+
+            ...
+
+            'email' => 'tikaraj21\newsletter\mailer\Mail',
+            
+            ...
+
+    ],
+	
 To use menu manager (optional). Execute yii migration here:
 ```
 yii migrate --migrationPath=@tikaraj21/newsletter/migrations	
