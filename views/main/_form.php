@@ -3,8 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use app\modules\newsletter\models\EmailTemplates;
-use app\modules\newsletter\models\Group;
+use tikaraj21\newsletter\models\EmailTemplates;
+use tikaraj21\newsletter\models\Group;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Equeue */

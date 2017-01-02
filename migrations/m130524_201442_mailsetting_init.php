@@ -29,7 +29,7 @@ class m130524_201442_mailsetting_init extends Migration
 			[5, 'imap_path', 'GE_IMAP_PATH', '{imap.gmail.com:993/imap/ssl}INBOX'],
 			[6, 'Host', 'GE_SERVER_HOST', 'smtp.gmail.com'],
 			[7, 'User Name', 'GE_SERVER_USERNAME', 'tika.raj@bentraytech.com'],
-			[8, 'Password', 'GE_SERVER_PASSWORD', '****'],
+			[8, 'Password', 'GE_SERVER_PASSWORD', '******'],
 			[9, 'Encryption Type', 'GE_SERVER_ENC_TYPE', 'tls'],
 			[10, 'Server Port', 'GE_SERVER_PORT', '587'],
 			[11, 'from', 'GE_PHP_FROM', 'test@flexyear.com'],

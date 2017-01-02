@@ -13,7 +13,7 @@ use tikaraj21\newsletter\models\EmailTemplates;
 use tikaraj21\newsletter\models\MailStore;
 use yii\filters\AccessControl;
 use tikaraj21\newsletter\models\Mailsetting;
-use app\models\Setting;
+use tikaraj21\newsletter\models\Setting;
 use tikaraj21\newsletter\models\MailStoreSearch;
 
 /**
