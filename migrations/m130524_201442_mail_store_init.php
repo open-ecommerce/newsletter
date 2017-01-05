@@ -22,6 +22,7 @@ class m130524_201442_mail_store_init extends Migration
 			'cc' => Schema::TYPE_TEXT,
 			'bcc' => Schema::TYPE_TEXT,
 			'attachments' => Schema::TYPE_TEXT,
+                       'created_date' => Schema::TYPE_DATE,
 			'status' => Schema::TYPE_STRING . '(50) NULL',
 			'unique_id' => Schema::TYPE_STRING . '(250) NULL',
         ], $tableOptions);
