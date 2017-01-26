@@ -15,6 +15,7 @@ use yii\filters\AccessControl;
 use tikaraj21\newsletter\models\Mailsetting;
 use tikaraj21\newsletter\models\Setting;
 use tikaraj21\newsletter\models\MailStoreSearch;
+use tikaraj21\newsletter\models\SavedEmailTemplates;
 
 /**
 
@@ -256,6 +257,8 @@ class MainController extends Controller
                         //finding the email-templates according template id
                         $email_template = EmailTemplates::find()->select(['template_body'])->where(['template_id'=>$model->templates])->all();
 
+						 $saved_email_template = SavedEmailTemplates::find()->select(['template_body'])->where(['template_id'=>$model->savedtemplates])->all();
+						 
                         foreach ($to_subscribers as $gto){
                             $to .= ','.$gto['subscriber_email'];
 
@@ -280,6 +283,10 @@ class MainController extends Controller
                         $message_body = NULL;
                         if(isset($email_template[0])){
                          $message_body = $email_template[0]['template_body'];   
+                        }
+						
+						 if(isset($saved_email_template[0])){
+                        	$message_body = $saved_email_template[0]['template_body'];
                         }
                         $message_body .= $model->text_body;
                         //creating unique id not to delete same attachments for multiple to-subcribers assigned for email created at a time
@@ -315,7 +322,12 @@ class MainController extends Controller
 
                        if ($result){
                             Yii::$app->session->setFlash('success','Successfully created.'); //for for wrong event.
-                            return $this->redirect(['mailcreate']);
+                             if ($model->templates){
+                            return $this->redirect(['email-templates/view','id'=>$model->templates]);
+                            }
+                           else {
+                           	return $this->redirect(['mailcreate']);
+                            }
                         }
                         else {
                             Yii::$app->session->setFlash('danger','Not created.'); //for for wrong event.

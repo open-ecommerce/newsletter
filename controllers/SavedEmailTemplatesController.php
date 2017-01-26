@@ -3,17 +3,17 @@
 namespace tikaraj21\newsletter\controllers;
 
 use Yii;
-use tikaraj21\newsletter\models\EmailTemplates;
-use tikaraj21\newsletter\models\EmailTemplatesSearch;
+use tikaraj21\newsletter\models\SavedEmailTemplates;
+use tikaraj21\newsletter\models\SavedEmailTemplatesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use tikaraj21\newsletter\models\SavedEmailTemplates;
+
 /**
  * EmailTemplatesController implements the CRUD actions for EmailTemplates model.
  */
-class EmailTemplatesController extends Controller
+class SavedEmailTemplatesController extends Controller
 {
     public function behaviors()
     {
@@ -26,7 +26,7 @@ class EmailTemplatesController extends Controller
             ],
             'access'=>[
                                 'class'=>AccessControl::classname(),
-                                'only'=>['create','update','delete','updatebackup'],
+                                'only'=>['create','update','delete'],
                                 'rules'=>[
                                             [
                                                 'allow'=>true,
@@ -43,14 +43,19 @@ class EmailTemplatesController extends Controller
      */
     public function actionIndex()
     {
-            $searchModel = new EmailTemplatesSearch();
+       if(Yii::$app->user->can('/*')){
+            $searchModel = new SavedEmailTemplatesSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
-     
+       }
+       else{
+           throw new ForbiddenHttpException;
+       }
+        
     }
 
     /**
@@ -73,6 +78,7 @@ class EmailTemplatesController extends Controller
     public function actionCreate()
     {
        
+       if(Yii::$app->user->can('/*')){
             $model = new EmailTemplates();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -82,7 +88,10 @@ class EmailTemplatesController extends Controller
                 'model' => $model,
             ]);
         }
-      
+       }
+       else{
+           throw new ForbiddenHttpException;
+       }
         
     }
 
@@ -94,6 +103,7 @@ class EmailTemplatesController extends Controller
      */
     public function actionUpdate($id)
     {
+         if(Yii::$app->user->can('/*')){
                     $model = $this->findModel($id);
 
                     //collecting the image sources in a string stored in database
@@ -123,47 +133,14 @@ class EmailTemplatesController extends Controller
                             'model' => $model,
                         ]);
                     }
-     
+       }
+       else{
+           throw new ForbiddenHttpException;
+       }
+       
         
     }
-public function actionUpdatebackup($id)
-    {
-    		$model = $this->findModel($id);
-    
-    		//collecting the image sources in a string stored in database
-    		preg_match_all('/(?<!_)src=([\'"])?(.*?)\\1/',$model->template_body, $arr_of_old_imgs);
-    
-    		if ($model->load(Yii::$app->request->post())) {
-              
-    			//collecting the image sources in a string submitted fotm the form
-    			preg_match_all('/(?<!_)src=([\'"])?(.*?)\\1/',$model->template_body, $arr_of_new_imgs);
-    
-    			//checking the image exist in ckeditor
-                $modelSavedEmail = new SavedEmailTemplates();
-    			foreach ($arr_of_old_imgs[0] as $srcs1){
-    				if(!in_array($srcs1, $arr_of_new_imgs[0])){
-    					$pure_src_modif = str_replace(['src="','http://localhost/SbrTest','"'],['','',''],$srcs1);
-    					$pure_delete_loc = str_replace('/',DIRECTORY_SEPARATOR,$pure_src_modif);
-    					//echo BASE_PATH.$pure_src12;die;
-    					@unlink(BASE_PATH.$pure_delete_loc);
-    				}
-    
-    			}
-    			$modelSavedEmail->template_name = $model->template_name;
-    			$modelSavedEmail->template_body = $model->template_body;
-    			$modelSavedEmail->template_description = $model->template_description;
-    			$modelSavedEmail->save();
-    			Yii::$app->session->setFlash('success','Successfully saved as a new.'); //for for wrong event.
-    			return $this->redirect(['saved-email-templates/index']);
-    		}
-    		else {
-    			return $this->render('update', [
-    					'model' => $model,
-    			]);
-    		}
-    	
-    
-    }
+
     /**
      * Deletes an existing EmailTemplates model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -174,6 +151,7 @@ public function actionUpdatebackup($id)
     {
        
        
+        if(Yii::$app->user->can('/*')){
                     $model = $this->findModel($id);
                     //collecting the image sources in a string stored in database
                     preg_match_all('/(?<!_)src=([\'"])?(.*?)\\1/',$model->template_body, $arr_of_old_imgs);
@@ -189,7 +167,10 @@ public function actionUpdatebackup($id)
                     $model->delete();
             
         return $this->redirect(['index']);
-      
+       }
+       else{
+           throw new ForbiddenHttpException;
+       }
         
         
     }
@@ -203,7 +184,7 @@ public function actionUpdatebackup($id)
      */
     protected function findModel($id)
     {
-        if (($model = EmailTemplates::findOne($id)) !== null) {
+        if (($model = SavedEmailTemplates::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -60,7 +60,10 @@ use tikaraj21\newsletter\models\Group;
                                                 ArrayHelper::map(EmailTemplates::find()->select(['template_id','template_name'])->orderBy('template_name')->all(),'template_id','template_name'),
                                                 ['prompt'=>'Select Template']
                                                 ) ?>
-
+                                        <?= $form->field($model, 'savedtemplates')->dropDownList(
+                                                ArrayHelper::map(SavedEmailTemplates::find()->select(['template_id','template_name'])->orderBy('template_name')->all(),'template_id','template_name'),
+                                                ['prompt'=>'Select Saved Template']
+                                                ) ?>
                                         <?= $form->field($model, 'attachment[]')->fileInput(['multiple'=>TRUE]) ?>
 
 

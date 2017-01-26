@@ -38,6 +38,7 @@ class Main extends Model
     public $cc_group;
     public $bcc_group;
     public $templates;
+	public $savedtemplates;
 
     /**
      * @inheritdoc
@@ -50,6 +51,7 @@ class Main extends Model
             ['cc', 'match', 'pattern' => '~^([a-z_A-Z.0-9]+@[a-z]+\.[a-z]+,?)+$~i', 'message' => 'There is at least one invalid email'],
             ['bcc', 'match', 'pattern' => '~^([a-z_A-Z.0-9]+@[a-z]+\.[a-z]+,?)+$~i', 'message' => 'There is at least one invalid email'],
             [['subject'],'required'],
+			['savedtemplates','safe'],
             [['to_group','cc_group','bcc_group'],'integer'],
         ];
     }
@@ -80,6 +82,7 @@ class Main extends Model
             'attempts' => 'Attempt',
             'last_attempt_time' => 'Last Attempt Time',
             'sent_time' => 'Sent Time',
+			'savedtemplates' => 'Saved Mail Template'
         ];
     }
 }

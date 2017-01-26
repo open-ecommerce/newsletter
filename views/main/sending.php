@@ -64,7 +64,7 @@ $this->registerCss($Css_script);
    <div class="row">
    <div class="col-md-1">	<a href="<?= Yii::$app->request->baseurl ?>/newsletter/main/mailcreate" class="btn btn-default btn-md">Compose Mail</a></div>
 	   <div class="col-md-1">	
-			<?=Html::submitButton('', ['class' => 'btn btn-default btn-md fa fa-trash-o',]);?>
+			<?=Html::submitButton('', ['class' => 'btn btn-default btn-md fa fa-trash-o','style'=>'padding:9px; margin-left:-10px']);?>
 	  </div>
 	</div>
 	<?php Pjax::begin(['id'=>'sending-mail']);?>

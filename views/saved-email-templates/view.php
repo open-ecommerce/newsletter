@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\EmailTemplates */
 
-$this->title = $model->template_name;
+$this->title = $model->template_id;
 $this->params['breadcrumbs'][] = ['label' => 'Email Templates', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,8 +15,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <h3><?= Html::encode($this->title) ?></h3>
 
     <p>
-        <?= Html::a('Saved as a backup', ['updatebackup', 'id' => $model->template_id], ['class' => 'btn btn-primary']) ?>
-      
+        <?= Html::a('Update', ['update', 'id' => $model->template_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $model->template_id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method' => 'post',
+            ],
+        ]) ?>
     </p>
 
     <?= DetailView::widget([
