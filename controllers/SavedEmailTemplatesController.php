@@ -43,7 +43,6 @@ class SavedEmailTemplatesController extends Controller
      */
     public function actionIndex()
     {
-       if(Yii::$app->user->can('/*')){
             $searchModel = new SavedEmailTemplatesSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -51,10 +50,7 @@ class SavedEmailTemplatesController extends Controller
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
-       }
-       else{
-           throw new ForbiddenHttpException;
-       }
+      
         
     }
 
@@ -78,7 +74,6 @@ class SavedEmailTemplatesController extends Controller
     public function actionCreate()
     {
        
-       if(Yii::$app->user->can('/*')){
             $model = new EmailTemplates();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -88,10 +83,7 @@ class SavedEmailTemplatesController extends Controller
                 'model' => $model,
             ]);
         }
-       }
-       else{
-           throw new ForbiddenHttpException;
-       }
+     
         
     }
 
@@ -103,7 +95,6 @@ class SavedEmailTemplatesController extends Controller
      */
     public function actionUpdate($id)
     {
-         if(Yii::$app->user->can('/*')){
                     $model = $this->findModel($id);
 
                     //collecting the image sources in a string stored in database
@@ -133,10 +124,7 @@ class SavedEmailTemplatesController extends Controller
                             'model' => $model,
                         ]);
                     }
-       }
-       else{
-           throw new ForbiddenHttpException;
-       }
+     
        
         
     }
@@ -151,7 +139,6 @@ class SavedEmailTemplatesController extends Controller
     {
        
        
-        if(Yii::$app->user->can('/*')){
                     $model = $this->findModel($id);
                     //collecting the image sources in a string stored in database
                     preg_match_all('/(?<!_)src=([\'"])?(.*?)\\1/',$model->template_body, $arr_of_old_imgs);
@@ -167,11 +154,7 @@ class SavedEmailTemplatesController extends Controller
                     $model->delete();
             
         return $this->redirect(['index']);
-       }
-       else{
-           throw new ForbiddenHttpException;
-       }
-        
+      
         
     }
 
