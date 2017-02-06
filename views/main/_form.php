@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use tikaraj21\newsletter\models\EmailTemplates;
 use tikaraj21\newsletter\models\Group;
+use tikaraj21\newsletter\models\SavedEmailTemplates;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Equeue */
