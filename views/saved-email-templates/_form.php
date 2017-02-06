@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use dosamigos\ckeditor\CKEditor;
 use yii\helpers\Url;
-use app\modules\newsletter\models\MergeFields;
+use tikaraj21\newsletter\models\MergeFields;
 
 
 /* @var $this yii\web\View */
