@@ -10,12 +10,6 @@
             "email": "tika.raj@bentraytech.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/open-ecommerce/newsletter"
-        }
-    ],
     "require": {
         "yiisoft/yii2": "*"
     },
