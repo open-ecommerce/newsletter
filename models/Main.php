@@ -26,7 +26,7 @@ use yii\base\Model;
  */
 class Main extends Model
 {
-    
+
     public $to;
     public $from;
     public $cc;
@@ -47,9 +47,9 @@ class Main extends Model
     {
         return [
             [['from', 'to', 'cc', 'bcc', 'html_body', 'text_body', 'reply_to','templates'], 'string'],
-            ['to', 'match', 'pattern' => '~^([a-z_A-Z.0-9]+@[a-z]+\.[a-z]+,?)+$~i', 'message' => 'There is at least one invalid email'],
-            ['cc', 'match', 'pattern' => '~^([a-z_A-Z.0-9]+@[a-z]+\.[a-z]+,?)+$~i', 'message' => 'There is at least one invalid email'],
-            ['bcc', 'match', 'pattern' => '~^([a-z_A-Z.0-9]+@[a-z]+\.[a-z]+,?)+$~i', 'message' => 'There is at least one invalid email'],
+            ['to', 'match', 'pattern' => '^([a-z_A-Z.0-9-]+@[a-z-]+.[a-z]+,?)+$', 'message' => 'There is at least one invalid email'],
+            ['cc', 'match', 'pattern' => '^([a-z_A-Z.0-9-]+@[a-z-]+.[a-z]+,?)+$', 'message' => 'There is at least one invalid email'],
+            ['bcc', 'match', 'pattern' => '^([a-z_A-Z.0-9-]+@[a-z-]+.[a-z]+,?)+$', 'message' => 'There is at least one invalid email'],
             [['subject'],'required'],
 			['savedtemplates','safe'],
             [['to_group','cc_group','bcc_group'],'integer'],
