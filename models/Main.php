@@ -42,6 +42,7 @@ class Main extends Model
 
     /**
      * @inheritdoc
+     * EGS changing regedit to alow - in emails
      */
     public function rules()
     {
