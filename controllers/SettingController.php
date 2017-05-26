@@ -33,7 +33,7 @@ class SettingController extends Controller
      */
     public function actionIndex()
     {
-        
+
         //gerenal setting
         $company_name = Setting::findOne(1);
         $company_name->scenario = 'company_name';
@@ -49,7 +49,7 @@ class SettingController extends Controller
         $date_format->scenario = 'date_format';
         $time_zone = Setting::findOne(7);
         $time_zone->scenario = 'time_zone';
-        
+
         $sun = Setting::findOne(8);
         $sun->scenario = 'sun';
         $mon = Setting::findOne(9);
@@ -64,54 +64,55 @@ class SettingController extends Controller
         $fri->scenario = 'fri';
         $sat = Setting::findOne(14);
         $sat->scenario = 'sat';
-        
+
         $leave_remaining_month = Setting::findOne(22);
         $leave_remaining_month->scenario = 'leave_remaining_month';
-        
+
         //email setting from tbl_mailsetting
         $sett_mail_type = Mailsetting::findOne(1);
         $sett_mail_type->scenario = 'mail_type';
-        
+
         $sett_re_intval = Mailsetting::findOne(2);
         $sett_re_intval->scenario = 'reload';
-        
+
         $sett_no_mail = Mailsetting::findOne(3);
         $sett_no_mail->scenario = 'no_of_mail';
-        
+
         $mail_encode_bit = Mailsetting::findOne(4);
         $mail_encode_bit->scenario = 'encode_bit';
-        
+
         $mail_imap_path = Mailsetting::findOne(5);
         $mail_imap_path->scenario = 'imap_path';
-        
+
         $sett_host = Mailsetting::findOne(6);
         $sett_host->scenario = 'host';
-        
+
         $sett_uname = Mailsetting::findOne(7);
         $sett_uname->scenario = 'uname';
-        
+
         $sett_pw = Mailsetting::findOne(8);
-        $sett_pw->setting_value = Setting::decrypt($sett_pw->setting_value, 'bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a3');
+        //EGS no funca $sett_pw->setting_value = Setting::decrypt($sett_pw->setting_value, 'bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a3');
+        $sett_pw->setting_value = '123';
         //die;
         $sett_pw->scenario = 'pw';
-        
+
         $sett_enc_type = Mailsetting::findOne(9);
         $sett_enc_type->scenario = 'enc';
-        
+
         $sett_port = Mailsetting::findOne(10);
         $sett_port->scenario = 'port';
-        
+
         $from = Mailsetting::findOne(11);
         $from->scenario = 'from';
-        
+
         $reply_to = Mailsetting::findOne(12);
         $reply_to->scenario = 'reply_to';
-        
+
         $return_path = Mailsetting::findOne(13);
         $return_path->scenario = 'return_path';
-        
-        
-        
+
+
+
         //email sending option
         $attendance_email_opt = Setting::findOne(15);
         $attendance_email_opt->scenario = 'attendance_email_opt';
@@ -119,17 +120,17 @@ class SettingController extends Controller
         $leave_req_opt->scenario = 'leave_req_opt';
         $attendance_correctn_opt = Setting::findOne(17);
         $attendance_correctn_opt->scenario = 'attendance_correctn_opt';
-        
+
         $staff_present = Setting::findOne(20);
         $staff_present->scenario = 'staff_present';
-        
+
         $attendance_alert_message = Setting::findOne(21);
         $attendance_alert_message->scenario = 'attendance_alert_message';
-        
+
         $mail_email_addr = Setting::findOne(19);
         $mail_email_addr->scenario = 'mail_email_addr';
-        
-        
+
+
         $setting = [
                         'company_name' => $company_name,
                         'address' => $address,
@@ -151,11 +152,11 @@ class SettingController extends Controller
                         'fri' => $fri,
                         'sat' => $sat,
                         'leave_remaining_month' => $leave_remaining_month,
-            
+
                         'mail_email_addr' => $mail_email_addr
-            
+
         ];
-        
+
         $email_setting = [
                         'sett_mail_type' => $sett_mail_type,
                         'sett_re_intval' => $sett_re_intval,
@@ -170,11 +171,11 @@ class SettingController extends Controller
                         'from' => $from,
                         'reply_to' => $reply_to,
                         'return_path' => $return_path
-                                   
+
         ];
-        
-        if(Yii::$app->request->post()){            
-     
+
+        if(Yii::$app->request->post()){
+
                 if( Model::loadMultiple($setting, Yii::$app->request->post()) && Model::validateMultiple($setting) && Model::loadMultiple($email_setting, Yii::$app->request->post())&& Model::validateMultiple($email_setting)){
                     $result = NULL;
                     $result2 = NULL;
@@ -199,7 +200,7 @@ class SettingController extends Controller
                        foreach ($email_setting as $setting_datas){
 
                            if($setting_datas->scenario == 'pw'){
-                               
+
                             $setting_datas->setting_value = Setting::encrypt($setting_datas->setting_value, 'bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a3');
 
                         }
@@ -210,33 +211,33 @@ class SettingController extends Controller
                     }
                     if($result2){
                          Yii::$app->session->setFlash('success','Successfully Saved.'); //for success.
-                         
+
                     }
                     else {
                         Yii::$app->session->setFlash('danger','Saving not successful.'); //for for wrong event.
-                        
+
                     }
-                    
+
 
                     return $this->redirect(Yii::$app->request->referrer);
 
                 }
         }
-        
-       
+
+
            $password_value =  $sett_pw->setting_value;
-          
+
         return $this->render('index', [
             'setting'=>$setting,
             'email_setting'=>$email_setting,
             'password_value'=>$password_value
-           
+
         ]);
-        
-        
+
+
     }
-    	
-	
+
+
     /*action for multiple update date in setting*/
     public function actionSave()
     {
@@ -441,7 +442,7 @@ class SettingController extends Controller
     public function actionGetMonths(){
         if (Yii::$app->request->post()){
             return Setting::HtmlOptionAjax(Yii::$app->request->post()['timeformat']);
-            
+
         }
     }
 }
