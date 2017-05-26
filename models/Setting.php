@@ -23,14 +23,14 @@ class Setting extends \yii\db\ActiveRecord
     {
         return '{{%setting}}';
     }
-    
+
 
     /**
      * @inheritdoc
      */
     public function rules()
     {
-      
+
         return [
             [['title', 'code', 'value'], 'required'],
             [['description'], 'string'],
@@ -49,7 +49,7 @@ class Setting extends \yii\db\ActiveRecord
             [['value'], 'boolean','on'=>'leave_req_opt'],
             [['value'], 'boolean','on'=>'attendance_correctn_opt'],
             [['value'], 'boolean','on'=>'mail_to_manager_opt'],
-            
+
             [['value'], 'integer','on'=>'sun'],
             [['value'], 'integer','on'=>'mon'],
             [['value'], 'integer','on'=>'tue'],
@@ -58,13 +58,13 @@ class Setting extends \yii\db\ActiveRecord
             [['value'], 'integer','on'=>'fri'],
             [['value'], 'integer','on'=>'sat'],
             [['value'], 'integer','on'=>'leave_remaining_month'],
-            
+
             [['value'], 'email','on'=>'mail_email_addr'],
             [['value'], 'integer','on'=>'staff_present'],
             [['value'], 'integer','on'=>'attendance_alert_message'],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -108,37 +108,37 @@ class Setting extends \yii\db\ActiveRecord
                                 'value' => 'Date',
                             ];
                     break;
-                
+
                 case 'date_format':
                     return [
                                 'value' => 'Date Format'
                             ];
                     break;
-                
+
                 case 'time_zone':
                     return [
                                 'value' => 'Time Zone',
                             ];
                     break;
-               
+
                  case 'attendance_email_opt':
                     return [
                                 'value' => 'i.Tick mark if should send attendance email'
                             ];
                     break;
-                
+
                 case 'leave_req_opt':
                     return [
                                 'value' => 'ii. Tick mark to send leave request mail'
                             ];
                     break;
-                
+
                 case 'attendance_correctn_opt':
                     return [
                                 'value' => 'iii. Tick mark to send attedance correction request'
                             ];
                     break;
-                
+
                 case 'mail_to_manager_opt':
                     return [
                                 'value' => 'iv. Tick mark to send mail to manager'
@@ -189,7 +189,7 @@ class Setting extends \yii\db\ActiveRecord
                                 'value' => 'Leave Review Month'
                             ];
                     break;
-                 
+
                 //default
                 default:
                     return [
@@ -200,7 +200,7 @@ class Setting extends \yii\db\ActiveRecord
                                 'description' => 'Description',
                             ];
             }
-        
+
     }
 
     /*public action for setting to set value with code*/
@@ -229,20 +229,20 @@ class Setting extends \yii\db\ActiveRecord
         return $receivedValue['value'];
 
     }
-    
+
     public static function GetSettModel($id){
-           
+
         $setting =  Setting::findOne($id);
         $setting->SettValidate($id);
         return $setting;
-        
+
     }
     public function SettValidate($id){
         return $this->rules($id);
-        
+
     }
     public static function getStrictDaysWithoutRegularHolidays(){
-        
+
             $regularHolidaysArrOrg = \yii\helpers\ArrayHelper::map(RegularHoliday::find()->all(),'day','day');
             $regularHolidaysArr = [];
             foreach ($regularHolidaysArrOrg as $regularHolidaysArrO){
@@ -250,21 +250,21 @@ class Setting extends \yii\db\ActiveRecord
             }
             $day_arr =[];
             $total_days = ['D_SUNDAY','D_MONDAY','D_TUESDAY','D_WEDNESDAY','D_THURSDAY','D_FRIDAY','D_SATURDAY'];
-            
+
             foreach ($total_days as $total_day){
-                
+
                 if($sett = Setting::findOne(['code'=>$total_day])->value){
                     if(!in_array($total_day, $regularHolidaysArr)){
                         $day_arr [] = $total_day;
                     }
-                        
+
                 }
             }
-        
+
         return $day_arr;
     }
     public static function sendMail($from,$subject,$message_body){
-        
+
          /*Starting configuration for smtp or other type*/
 
                 Yii::$app->email->setMailType(Mailsetting::getData('GE_MAIL_TYPE'));//aeruement is either 'SMTP' or 'PHPMAIL'
@@ -301,22 +301,22 @@ class Setting extends \yii\db\ActiveRecord
                 //Passing arguement to set Return Path
                 Yii::$app->email->setReturnPath(Mailsetting::getData('GE_PHP_RETURN_PATH'));
 
-                
+
 //                .............................................................................................
-                
+
 
                 Yii::$app->email->configSet();//note that email setting is completed only when execute this function
 
-               
 
-               
+
+
                 $to = Mailsetting::getData('GE_PHP_RETURN_PATH');
-               
+
 
              return Yii::$app->email->SendMail($from,$to,$subject,$message_body,NULL,NULL,NULL);
-                   
+
     }
-    
+
     public static function encrypt($plaintext,$key){
 
             $iv = mcrypt_create_iv(
@@ -333,7 +333,7 @@ class Setting extends \yii\db\ActiveRecord
                     MCRYPT_MODE_CBC,
                     $iv
                 )
-            );    
+            );
         }
     public static function decrypt($ciphertext_base64,$key){
             $data = base64_decode($ciphertext_base64);
@@ -492,7 +492,7 @@ class Setting extends \yii\db\ActiveRecord
 		                                    'Asia/Vladivostok'     => "(GMT+11:00) Vladivostok",
 		                                    'Asia/Magadan'         => "(GMT+12:00) Magadan",
 		                                    'Pacific/Auckland'     => "(GMT+12:00) Auckland",
-		                                    'Pacific/Fiji'         => "(GMT+12:00) Fiji",   
+		                                    'Pacific/Fiji'         => "(GMT+12:00) Fiji",
 		                        ];
     }
     public static function HtmlOption(){
@@ -509,7 +509,7 @@ class Setting extends \yii\db\ActiveRecord
            }else{
                $html .='<option value='.$value.'>'.$month_arr[$value].'</option>';
            }
-           
+
         }
         return $html;
     }
@@ -519,7 +519,7 @@ class Setting extends \yii\db\ActiveRecord
         }else{
             $month_arr = self::EnglishMonthArray();
         }
-        
+
         $html = NULL;
         for($i = 0; $i<=12;$i++){
            if($i<10){
@@ -532,11 +532,11 @@ class Setting extends \yii\db\ActiveRecord
            }else{
                $html .='<option value='.$value.'>'.$month_arr[$value].'</option>';
            }
-           
+
         }
         return $html;
     }
-    
+
     public static function NepaliMonthArray() {
         return [
                                                     '01' => 'Baisakh',
@@ -576,7 +576,7 @@ class Setting extends \yii\db\ActiveRecord
      * GetTimeAccordingToSetting($datetime)
      * <li></li>
      * <li><b>$datetime</b>english datetime</li>
-     */ 
+     */
     public static function GetTimeAccordingToSetting($datetime){
                     $dateObj = date_create($datetime);
                     $date = $dateObj->format('Y-m-d');
@@ -610,7 +610,7 @@ class Setting extends \yii\db\ActiveRecord
      * <li><b>$datetime</b>datetime</li>
      */
     public static function GetEnglichDate($date){
-                    
+
                     if(Yii::$app->session['time'] == 'nep'){
                         $date = Payslip::nepali_to_english($date);
                     }
@@ -631,7 +631,7 @@ class Setting extends \yii\db\ActiveRecord
         }
     }
     public static function CheckEndDateThisMonth(){
-        
+
         $maxDays=date('t');//maximum day in this month
         $currentDayOfMonth=date('j');//last day of this month
 
@@ -649,7 +649,7 @@ class Setting extends \yii\db\ActiveRecord
             }elseif($nepaliPrevMonth== 0){
                 $nepaliPrevMonth = 12;
             }
-            
+
             return $nepaliPrevMonth;
         }else{
             return date('m');
@@ -662,6 +662,6 @@ class Setting extends \yii\db\ActiveRecord
             return date('m');
         }
     }
-   
-        
+
+
 }

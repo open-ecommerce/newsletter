@@ -119,10 +119,10 @@ class MainController extends Controller
 
 
         if ($model->load(Yii::$app->request->post())) {
-            
-            
+
+
                 /*Starting configuration for smtp or other type*/
-            
+
                 Yii::$app->email->setMailType(Mailsetting::getData('GE_MAIL_TYPE'));
 
                 //Passing arguement for Host setting
@@ -132,24 +132,25 @@ class MainController extends Controller
                 Yii::$app->email->setUname(Mailsetting::getData('GE_SERVER_USERNAME'));
 
                 //Passing arguement for Password setting
-                $pass = Setting::decrypt(Mailsetting::getData('GE_SERVER_PASSWORD'), 'bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a3');
+                //$pass = Setting::decrypt(Mailsetting::getData('GE_SERVER_PASSWORD'), 'bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a3');
+                $pass = Setting::decrypt(Mailsetting::getData('GE_SERVER_PASSWORD'), '123');
                 Yii::$app->email->setPassd($pass);
 
                 //Passing arguement for Encryption Type setting
                 Yii::$app->email->setEncType(Mailsetting::getData('GE_SERVER_ENC_TYPE'));
 
-                
+
                 //Passing arguement for Port setting
                 Yii::$app->email->setServerPort(Mailsetting::getData('GE_SERVER_PORT'));
 
                 /*Ending configuration for smtp or other type*/
-                
-                
-                
+
+
+
 
                 Yii::$app->email->configSet();//note that email setting is completed only when execute this function
 
-               
+
 
                 $from = Mailsetting::getData('GE_PHP_FROM');
 
@@ -157,46 +158,46 @@ class MainController extends Controller
 
                 $subject = $model->subject;
 
-                
+
 
                 $cc = $model->cc;
 
                 $bcc = $model->bcc;
-                
+
                 $to_subscribers = EmailSubscribers::find()->select(['full_name','subscriber_email'])->where(['group_id'=>$model->to_group])->all();
                 $cc_subscribers = EmailSubscribers::find()->select(['full_name','subscriber_email'])->where(['group_id'=>$model->cc_group])->all();
                 $bcc_subscribers = EmailSubscribers::find()->select(['full_name','subscriber_email'])->where(['group_id'=>$model->bcc_group])->all();
                 $email_template = EmailTemplates::find()->select(['template_body'])->where(['template_id'=>$model->templates])->all();
                 foreach ($to_subscribers as $gto){
                     $to .= ','.$gto['subscriber_email'];
-                    
+
                 }
-                
+
                 foreach ($cc_subscribers as $gcc){
                     $cc .= ','.$gcc['subscriber_email'];
-                    
+
                 }
-                
+
                 foreach ($bcc_subscribers as $gbcc){
                     $bcc .= ','.$gbcc['subscriber_email'];
                 }
                 $to=str_replace(',,',',', $to);
-                $to = trim($to, ','); 
+                $to = trim($to, ',');
                 $cc=str_replace(',,',',', $cc);
-                $cc = trim($cc, ','); 
+                $cc = trim($cc, ',');
                 $bcc=str_replace(',,',',', $bcc);
-                $bcc = trim($bcc, ','); 
-                
+                $bcc = trim($bcc, ',');
+
                 $message_body =$email_template[0]['template_body'];
                 $message_body .= $model->text_body;
                 /*Assigning the files for attachments*/
 
                 $attachment = UploadedFile::getInstances($model,'attachment');
-                
-                
+
+
                 // Syntax Yii::$app->email->SendMail($from,$to,$subject,$message_body,$cc,$bcc,$attachment);
                 // It is important that default mail type is PHP mail
-                // If we want to use PHP mail ,we can call only the function 
+                // If we want to use PHP mail ,we can call only the function
                 // "Yii::$app->email->SendMail($from,$to,$subject,$message_body,$cc,$bcc,$attachment);"
                 // If we want to use Smtp mail or other type, we can call the function
                 // "Yii::$app->email->SendMail($from,$to,$subject,$message_body,$cc,$bcc,$attachment);"
@@ -214,7 +215,7 @@ class MainController extends Controller
 
         else{
 
-    
+
 
             return $this->render('create', [
 
@@ -239,7 +240,7 @@ class MainController extends Controller
 
                         $subject = $model->subject;
 
-                        
+
 
                         $cc = $model->cc;
 
@@ -258,7 +259,7 @@ class MainController extends Controller
                         $email_template = EmailTemplates::find()->select(['template_body'])->where(['template_id'=>$model->templates])->all();
 
 						 $saved_email_template = SavedEmailTemplates::find()->select(['template_body'])->where(['template_id'=>$model->savedtemplates])->all();
-						 
+
                         foreach ($to_subscribers as $gto){
                             $to .= ','.$gto['subscriber_email'];
 
@@ -274,17 +275,17 @@ class MainController extends Controller
                         }
 
                         $to=str_replace(',,',',', $to);
-                        $to = trim($to, ','); 
+                        $to = trim($to, ',');
                         $to = explode(',', $to);
                         $cc=str_replace(',,',',', $cc);
-                        $cc = trim($cc, ','); 
+                        $cc = trim($cc, ',');
                         $bcc=str_replace(',,',',', $bcc);
                         $bcc = trim($bcc, ',');
                         $message_body = NULL;
                         if(isset($email_template[0])){
-                         $message_body = $email_template[0]['template_body'];   
+                         $message_body = $email_template[0]['template_body'];
                         }
-						
+
 						 if(isset($saved_email_template[0])){
                         	$message_body = $saved_email_template[0]['template_body'];
                         }
@@ -311,10 +312,10 @@ class MainController extends Controller
                             $mail_store->unique_id = $unique_id;
                             $mail_store->status = 'Queue';
                             if(isset($attachment_like_str)){
-                            $mail_store->attachments = $attachment_like_str;    
+                            $mail_store->attachments = $attachment_like_str;
                             }
                             $result = $mail_store->save();
-                        } 
+                        }
 
 
                       //Yii::$app->email->DeleteAttach($mail_store->attachments);
@@ -344,22 +345,22 @@ class MainController extends Controller
 
                     ]);
 
-                }    
-       
+                }
+
     }
     /**
      * Action for sending mail
      */
-    
+
     public function actionSendmail() {
-        
+
 //        $setting = Mailsetting::find()->select(['setting_value'])->all();
-        
+
                 set_time_limit ( 300 );//default 5 minutes
-        
+
                 if(Yii::$app->session->get('Number Mail Send At A Time')){
 
-                   $datas = MailStore::find()->where(['status'=>'Queue'])->limit(Yii::$app->session->get('Number Mail Send At A Time'))->all(); 
+                   $datas = MailStore::find()->where(['status'=>'Queue'])->limit(Yii::$app->session->get('Number Mail Send At A Time'))->all();
                 }
                 else {
                     $datas = MailStore::find()->where(['status'=>'Queue'])->limit(20)->all();//default 20 minutes
@@ -410,7 +411,7 @@ class MainController extends Controller
                     if($name){
                         $mails['message_body']= str_replace('{{bent_stf}}', $name->full_name, $mails['message_body']);
                     }
-                    //merge field operation end 
+                    //merge field operation end
 
                     $result = Yii::$app->email->SendMail($mails['from'],$mails['to'],$mails['subject'],$mails['message_body'],$mails['cc'],$mails['bcc'],  unserialize($mails['attachments']));
 
@@ -442,17 +443,17 @@ class MainController extends Controller
                 }
                 //echo $result;
                 return $result;
-       
+
     }
-    
+
     /**
      * Action for sending mail using crome job
      */
-    
+
     public function actionCromjobsend() {
-                
+
                 $setting = Mailsetting::find()->select(['setting_value'])->all();
-                
+
                 set_time_limit ( 300 );//default 5 minutes
 
 
@@ -460,7 +461,7 @@ class MainController extends Controller
 
 
                 /*Starting configuration for smtp or other type*/
-            
+
                 Yii::$app->email->setMailType($setting[2]['setting_value']);
 
                 //Passing arguement for Host setting
@@ -475,15 +476,15 @@ class MainController extends Controller
                 //Passing arguement for Encryption Type setting
                 Yii::$app->email->setEncType($setting[6]['setting_value']);
 
-                
+
                 //Passing arguement for Port setting
                 Yii::$app->email->setServerPort($setting[7]['setting_value']);
 
                 /*Ending configuration for smtp or other type*/
                 Yii::$app->email->configSet();//note that email setting is completed only when execute this function
-                
+
                 /*Starting configuration for php mail*/
-                
+
                 //Passing arguement to set from
                 Yii::$app->email->setFrom($setting[8]['setting_value']);
 
@@ -492,10 +493,10 @@ class MainController extends Controller
 
                 //Passing arguement to set Return Path
                 Yii::$app->email->setReturnPath($setting[10]['setting_value']);
-        
+
                 $result = 0;
                 if(isset($datas[0]['subject'])){
-                    
+
                     $result = Yii::$app->email->SendMail($datas[0]['from'],$datas[0]['to'],$datas[0]['subject'],$datas[0]['message_body'],$datas[0]['cc'],$datas[0]['bcc'],  unserialize($datas[0]['attachments']));
                     if ($result){
                        $model = MailStore::findOne($datas[0]['mail_id']);
@@ -515,13 +516,13 @@ class MainController extends Controller
                 else {
                     return $result;
                 }
-       
+
     }
     /**
      * Action for only render view page
      */
     public function actionSending(){
-    	
+
                     $page_reload_intval = Mailsetting::find()->select(['setting_name','setting_value'])->where(['setting_id'=>1])->all();
 
                     if(isset($page_reload_intval[0]['setting_value'])){
@@ -554,11 +555,11 @@ class MainController extends Controller
                          'datas'=>$datas,
                          'searchModel' => $searchModel,
                          'dataProvider' => $dataProvider,
-                     ]);    
-      
+                     ]);
+
 
     }
-    
+
     /**
 
      * Updates an existing Main model.
@@ -574,7 +575,7 @@ class MainController extends Controller
     public function actionUpdate($id)
 
     {
-        
+
                 $model = new Main();
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
@@ -589,8 +590,8 @@ class MainController extends Controller
                     ]);
 
                 }
-       
-      
+
+
 
     }
 
@@ -611,10 +612,10 @@ class MainController extends Controller
     public function actionDelete($id)
 
     {
-            
+
             MailStore::findOne($id)->delete();
                 return $this->redirect(['sending']);
-        
+
 
     }
 
