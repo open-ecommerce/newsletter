@@ -38,8 +38,8 @@ class Mailsetting extends \yii\db\ActiveRecord
             [['setting_value'], 'string', 'max' => 255,'on'=>'pw'],
             [['setting_value'], 'string', 'max' => 255,'on'=>'enc'],
             [['setting_value'], 'integer','on'=>'port'],
-            [['setting_value'], 'email','on'=>['from','reply_to','return_path','uname']],
-            [['setting_value'], 'email','on'=>['from','reply_to','return_path','uname']]
+            [['setting_value'], 'email','on'=>['from','reply_to','return_path']],
+            [['setting_value'], 'string','on'=>['uname']]
         ];
     }
 

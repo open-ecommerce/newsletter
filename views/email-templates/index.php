@@ -46,15 +46,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                                                            ]
                                                 ],
                                                 //'template_body:html',
-                                                [
-                                                    'attribute'=>'template_body',
-                                                    'format'=>'html',
-                                                     'filterInputOptions'=>[
-                                                                                'class'=>'form-control',
-                                                                                'placeholder'=>'Search with template content'
-                                                                           ]
-                                                ],
-                                                //'template_description:ntext',
+//                                                [
+//                                                    'attribute'=>'template_body',
+//                                                    'format'=>'html',
+//                                                     'filterInputOptions'=>[
+//                                                                                'class'=>'form-control',
+//                                                                                'placeholder'=>'Search with template content'
+//                                                                           ]
+//                                                ],
+                                               'template_description:ntext',
 
                                                 ['class' => 'yii\grid\ActionColumn',
                                                      'header'=>'<span style="color:#3c8dbc">Action</span>'

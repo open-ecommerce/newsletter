@@ -1,10 +1,11 @@
 <?php
 
+
 namespace tikaraj21\newsletter\models;
 
 use Yii;
 use yii\base\Model;
-
+use yii\filters\VerbFilter;
 /**
  * This is the model class for table "test_mail_queue".
  *
@@ -24,8 +25,7 @@ use yii\base\Model;
  * @property string $last_attempt_time
  * @property string $sent_time
  */
-class Main extends Model
-{
+class Main extends Model {
 
     public $to;
     public $from;
@@ -38,26 +38,26 @@ class Main extends Model
     public $cc_group;
     public $bcc_group;
     public $templates;
-	public $savedtemplates;
+    public $savedtemplates;
 
     /**
      * @inheritdoc
      * EGS changing regedit to alow - in emails
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['from', 'to', 'cc', 'bcc', 'html_body', 'text_body', 'reply_to','templates'], 'string'],
+            [['from', 'to', 'cc', 'bcc', 'html_body', 'text_body', 'reply_to', 'templates'], 'string'],
             ['to', 'match', 'pattern' => '^([a-z_A-Z.0-9-]+@[a-z-]+.[a-z]+,?)+$', 'message' => 'There is at least one invalid email'],
             ['cc', 'match', 'pattern' => '^([a-z_A-Z.0-9-]+@[a-z-]+.[a-z]+,?)+$', 'message' => 'There is at least one invalid email'],
             ['bcc', 'match', 'pattern' => '^([a-z_A-Z.0-9-]+@[a-z-]+.[a-z]+,?)+$', 'message' => 'There is at least one invalid email'],
-            [['subject'],'required'],
-			['savedtemplates','safe'],
-            [['to_group','cc_group','bcc_group'],'integer'],
+            [['subject'], 'required'],
+            ['savedtemplates', 'safe'],
+            [['to_group', 'cc_group', 'bcc_group'], 'integer'],
         ];
     }
-    public function customValidate($attribute, $params){
-        if(true){
+
+    public function customValidate($attribute, $params) {
+        if (true) {
             $this->addError($attribute, 'Incorrect username or password.');
         }
     }
@@ -65,8 +65,7 @@ class Main extends Model
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'from' => 'From',
@@ -83,7 +82,23 @@ class Main extends Model
             'attempts' => 'Attempt',
             'last_attempt_time' => 'Last Attempt Time',
             'sent_time' => 'Sent Time',
-			'savedtemplates' => 'Saved Mail Template'
+            'savedtemplates' => 'Saved Mail Template'
         ];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                    'delete-multiple' => ['post'],
+                ],
+            ],
+        ];
+    }
+
 }

@@ -14,10 +14,9 @@ use yii\web\ForbiddenHttpException;
 /**
  * EmailSubscribersController implements the CRUD actions for EmailSubscribers model.
  */
-class EmailSubscribersController extends Controller
-{
-    public function behaviors()
-    {
+class EmailSubscribersController extends Controller {
+
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -25,16 +24,16 @@ class EmailSubscribersController extends Controller
                     'delete' => ['post'],
                 ],
             ],
-            'access'=>[
-                                'class'=>AccessControl::classname(),
-                                'only'=>['index','create','update','delete'],
-                                'rules'=>[
-                                            [
-                                                'allow'=>true,
-                                                'roles'=>['@']
-                                            ],
-                                ]
-                    ]
+            'access' => [
+                'class' => AccessControl::classname(),
+                'only' => ['index', 'create', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@']
+                    ],
+                ]
+            ]
         ];
     }
 
@@ -42,18 +41,15 @@ class EmailSubscribersController extends Controller
      * Lists all EmailSubscribers models.
      * @return mixed
      */
-    public function actionIndex($group_id)
-    {
-            $searchModel = new EmailSubscribersSearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$group_id);
+    public function actionIndex($group_id) {
+        $searchModel = new EmailSubscribersSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $group_id);
 
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-                'group_id'=>$group_id
-            ]);
-     
-        
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'group_id' => $group_id
+        ]);
     }
 
     /**
@@ -61,13 +57,11 @@ class EmailSubscribersController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id,$group_id)
-    {
-            return $this->render('view', [
-            'model' => $this->findModel($id),
-            'group_id'=>$group_id
-            ]);
-       
+    public function actionView($id, $group_id) {
+        return $this->render('view', [
+                    'model' => $this->findModel($id),
+                    'group_id' => $group_id
+        ]);
     }
 
     /**
@@ -75,20 +69,18 @@ class EmailSubscribersController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($group_id)
-    {
-            $model = new EmailSubscribers();
-            if ($model->load(Yii::$app->request->post())) {
-                $model->group_id = $group_id;
-                $model->save();
-                return $this->redirect(['index', 'group_id' =>$group_id]);
-            } else {
-                return $this->render('create', [
-                    'model' => $model,
-                    'group_id'=>$group_id
-                ]);
-            }
-       
+    public function actionCreate($group_id) {
+        $model = new EmailSubscribers();
+        if ($model->load(Yii::$app->request->post())) {
+            $model->group_id = $group_id;
+            $model->save();
+            return $this->redirect(['index', 'group_id' => $group_id]);
+        } else {
+            return $this->render('create', [
+                        'model' => $model,
+                        'group_id' => $group_id
+            ]);
+        }
     }
 
     /**
@@ -97,21 +89,18 @@ class EmailSubscribersController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id,$group_id)
-    {
-                $model = $this->findModel($id);
-                if ($model->load(Yii::$app->request->post())) {
-                   $model->group_id = $group_id;
-                    $model->save();
-                    return $this->redirect(['index', 'group_id' =>$group_id]);
-                } else {
-                    return $this->render('update', [
+    public function actionUpdate($id, $group_id) {
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->group_id = $group_id;
+            $model->save();
+            return $this->redirect(['index', 'group_id' => $group_id]);
+        } else {
+            return $this->render('update', [
                         'model' => $model,
-                        'group_id'=>$group_id
-                    ]);
-                }
-        
-        
+                        'group_id' => $group_id
+            ]);
+        }
     }
 
     /**
@@ -120,13 +109,10 @@ class EmailSubscribersController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id,$group_id)
-    {
-          $this->findModel($id)->delete();
+    public function actionDelete($id, $group_id) {
+        $this->findModel($id)->delete();
 
-         return $this->redirect(['index', 'group_id' =>$group_id]);
-      
-        
+        return $this->redirect(['index', 'group_id' => $group_id]);
     }
 
     /**
@@ -136,12 +122,12 @@ class EmailSubscribersController extends Controller
      * @return EmailSubscribers the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = EmailSubscribers::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }
