@@ -17,6 +17,7 @@ use tikaraj21\newsletter\models\Mailsetting;
 use tikaraj21\newsletter\models\Setting;
 use tikaraj21\newsletter\models\MailStoreSearch;
 use tikaraj21\newsletter\models\SavedEmailTemplates;
+use common\models\User;
 
 /**
 
@@ -207,14 +208,21 @@ class MainController extends Controller {
 
             $bcc = $model->bcc;
 
-            //finding the to-subcribers according to group id
-            $to_subscribers = EmailSubscribers::find()->select(['full_name', 'subscriber_email'])->where(['group_id' => $model->to_group])->all();
+            // check if send to all users or the emails of the group
+            if (Main::GROUP_ALL_CLIENTS_ID == $model->to_group) {               
+                $to_subscribers = User::getNewsletterList();
+                $cc_subscribers = [];
+                $bcc_subscribers = [];
+            } else {
+                //finding the to-subcribers according to group id
+                $to_subscribers = EmailSubscribers::find()->select(['full_name', 'subscriber_email'])->where(['group_id' => $model->to_group])->all();
+                //finding the cc-subcribers according to group id
+                $cc_subscribers = EmailSubscribers::find()->select(['full_name', 'subscriber_email'])->where(['group_id' => $model->cc_group])->all();
+                //finding the bcc-subcribers according to group id
+                $bcc_subscribers = EmailSubscribers::find()->select(['full_name', 'subscriber_email'])->where(['group_id' => $model->bcc_group])->all();
+            }
 
-            //finding the cc-subcribers according to group id
-            $cc_subscribers = EmailSubscribers::find()->select(['full_name', 'subscriber_email'])->where(['group_id' => $model->cc_group])->all();
 
-            //finding the bcc-subcribers according to group id
-            $bcc_subscribers = EmailSubscribers::find()->select(['full_name', 'subscriber_email'])->where(['group_id' => $model->bcc_group])->all();
 
             //finding the email-templates according template id
             $email_template = EmailTemplates::find()->select(['template_body'])->where(['template_id' => $model->templates])->all();
@@ -280,7 +288,7 @@ class MainController extends Controller {
             //Yii::$app->email->DeleteAttach($mail_store->attachments);
             //
 
-                       if ($result) {
+            if ($result) {
                 Yii::$app->session->setFlash('success', 'Successfully created.'); //for for wrong event.
                 if ($model->templates) {
                     return $this->redirect(['email-templates/view', 'id' => $model->templates]);
@@ -598,15 +606,14 @@ class MainController extends Controller {
         }
 
         $delCount = Yii::$app
-            ->db
-            ->createCommand()
-            ->delete('mail_store', ['mail_id' => $pk])
-            ->execute();        
-        
+                ->db
+                ->createCommand()
+                ->delete('mail_store', ['mail_id' => $pk])
+                ->execute();
+
         if ($delCount > 0) {
             return \yii\helpers\Json::encode($delCount . " mails has being deleted.");
         }
-        
     }
 
 }

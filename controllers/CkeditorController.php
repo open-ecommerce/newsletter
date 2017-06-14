@@ -16,9 +16,15 @@ class CkeditorController extends Controller
         
         $file = time()."_".$uploadedFile->name;
         $file_extension = $uploadedFile->extension;
-        $url = Yii::$app->urlManager->createAbsoluteUrl('/Uploads/ckeditor/'.$file);
-        BaseFileHelper::createDirectory(Yii::getAlias('@webroot').'/Uploads/ckeditor/');
-        $uploadPath = Yii::getAlias('@webroot').'/Uploads/ckeditor/'.$file;
+
+        $url = Yii::$app->urlManager->createAbsoluteUrl('/uploads/newsletter/'.$file);
+        BaseFileHelper::createDirectory(Yii::getAlias('@webroot').'/uploads/newsletter/');
+        $uploadPath = Yii::getAlias('@webroot').'/uploads/newsletter/'.$file;
+
+        //$url = Yii::$app->urlManager->createAbsoluteUrl(Yii::getAlias('@app').'/storage/web/newsletter/'.$file);
+        //BaseFileHelper::createDirectory(Yii::getAlias('@storage').'/web/newsletter/');
+        //$uploadPath = Yii::getAlias('@storage').'/web/newsletter/'.$file;
+
         
         //extensive suitability check before doing anything with the file…
         if ($uploadedFile==null)

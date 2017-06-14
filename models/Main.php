@@ -40,6 +40,8 @@ class Main extends Model {
     public $templates;
     public $savedtemplates;
 
+    const GROUP_ALL_CLIENTS_ID = 1;    
+    
     /**
      * @inheritdoc
      * EGS changing regedit to alow - in emails
