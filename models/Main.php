@@ -40,7 +40,7 @@ class Main extends Model {
     public $templates;
     public $savedtemplates;
 
-    const GROUP_ALL_CLIENTS_ID = 1;    
+    const GROUP_ALL_CLIENTS_ID = 999;    
     
     /**
      * @inheritdoc
@@ -52,7 +52,7 @@ class Main extends Model {
             ['to', 'match', 'pattern' => '^([a-z_A-Z.0-9-]+@[a-z-]+.[a-z]+,?)+$', 'message' => 'There is at least one invalid email'],
             ['cc', 'match', 'pattern' => '^([a-z_A-Z.0-9-]+@[a-z-]+.[a-z]+,?)+$', 'message' => 'There is at least one invalid email'],
             ['bcc', 'match', 'pattern' => '^([a-z_A-Z.0-9-]+@[a-z-]+.[a-z]+,?)+$', 'message' => 'There is at least one invalid email'],
-            [['subject'], 'required'],
+            [['subject', 'templates', 'text_body'], 'required'],
             ['savedtemplates', 'safe'],
             [['to_group', 'cc_group', 'bcc_group'], 'integer'],
         ];

@@ -10,13 +10,13 @@ use yii\filters\VerbFilter;
 use yii\widgets\ActiveForm;
 use yii\base\Model;
 use tikaraj21\newsletter\models\Mailsetting;
+
 /**
  * SettingController implements the CRUD actions for Setting model.
  */
-class SettingController extends Controller
-{
-    public function behaviors()
-    {
+class SettingController extends Controller {
+
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -31,8 +31,7 @@ class SettingController extends Controller
      * Lists all Setting models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
 
         //gerenal setting
         $company_name = Setting::findOne(1);
@@ -111,6 +110,8 @@ class SettingController extends Controller
         $return_path = Mailsetting::findOne(13);
         $return_path->scenario = 'return_path';
 
+        $sett_mail_mode = Mailsetting::findOne(15);
+        $sett_mail_mode->scenario = 'mail_mode';
 
 
         //email sending option
@@ -132,215 +133,181 @@ class SettingController extends Controller
 
 
         $setting = [
-                        'company_name' => $company_name,
-                        'address' => $address,
-                        'country' => $country,
-                        'phone' =>$phone,
-                        'date' =>$date,
-                        'date_format' =>$date_format,
-                        'time_zone' =>$time_zone,
-                        'attendance_email_opt' =>$attendance_email_opt,
-                        'leave_req_opt' => $leave_req_opt,
-                        'attendance_correctn_opt' => $attendance_correctn_opt,
-                        'staff_present' => $staff_present,
-        	        	'attendance_alert_message' => $attendance_alert_message,
-                        'sun' => $sun,
-                        'mon' => $mon,
-                        'tue' => $tue,
-                        'wed' => $wed,
-                        'thu' => $thu,
-                        'fri' => $fri,
-                        'sat' => $sat,
-                        'leave_remaining_month' => $leave_remaining_month,
-
-                        'mail_email_addr' => $mail_email_addr
-
+            'company_name' => $company_name,
+            'address' => $address,
+            'country' => $country,
+            'phone' => $phone,
+            'date' => $date,
+            'date_format' => $date_format,
+            'time_zone' => $time_zone,
+            'attendance_email_opt' => $attendance_email_opt,
+            'leave_req_opt' => $leave_req_opt,
+            'attendance_correctn_opt' => $attendance_correctn_opt,
+            'staff_present' => $staff_present,
+            'attendance_alert_message' => $attendance_alert_message,
+            'sun' => $sun,
+            'mon' => $mon,
+            'tue' => $tue,
+            'wed' => $wed,
+            'thu' => $thu,
+            'fri' => $fri,
+            'sat' => $sat,
+            'leave_remaining_month' => $leave_remaining_month,
+            'mail_email_addr' => $mail_email_addr
         ];
 
         $email_setting = [
-                        'sett_mail_type' => $sett_mail_type,
-                        'sett_re_intval' => $sett_re_intval,
-                        'sett_no_mail' => $sett_no_mail,
-                        'mail_encode_bit' => $mail_encode_bit,
-                        'mail_imap_path'=>$mail_imap_path,
-                        'sett_host' => $sett_host,
-                        'sett_uname' => $sett_uname,
-                        'sett_pw' => $sett_pw,
-                        'sett_enc_type' => $sett_enc_type,
-                        'sett_port' => $sett_port,
-                        'from' => $from,
-                        'reply_to' => $reply_to,
-                        'return_path' => $return_path
-
+            'sett_mail_type' => $sett_mail_type,
+            'sett_mail_mode' => $sett_mail_mode,
+            'sett_re_intval' => $sett_re_intval,
+            'sett_no_mail' => $sett_no_mail,
+            'mail_encode_bit' => $mail_encode_bit,
+            'mail_imap_path' => $mail_imap_path,
+            'sett_host' => $sett_host,
+            'sett_uname' => $sett_uname,
+            'sett_pw' => $sett_pw,
+            'sett_enc_type' => $sett_enc_type,
+            'sett_port' => $sett_port,
+            'from' => $from,
+            'reply_to' => $reply_to,
+            'return_path' => $return_path
         ];
 
-        if(Yii::$app->request->post()){
+        if (Yii::$app->request->post()) {
 
-                if( Model::loadMultiple($setting, Yii::$app->request->post()) && Model::validateMultiple($setting) && Model::loadMultiple($email_setting, Yii::$app->request->post())&& Model::validateMultiple($email_setting)){
-                    $result = NULL;
-                    $result2 = NULL;
-                    $check = NULL;
-                    $count = 0;
-                    foreach ($setting as $setting_datas){
-                        if(($count==4) && ($setting_datas->value=='N')){
-                            $check = TRUE;
-                        }
-                        if($check){
-                            if($count==5){
-                                 $setting_datas->value = '0';
-                            }
-
-
-                        }
-
-                        $result = $setting_datas->save();
-                        $count++;
+            if (Model::loadMultiple($setting, Yii::$app->request->post()) && Model::validateMultiple($setting) && Model::loadMultiple($email_setting, Yii::$app->request->post()) && Model::validateMultiple($email_setting)) {
+                $result = NULL;
+                $result2 = NULL;
+                $check = NULL;
+                $count = 0;
+                foreach ($setting as $setting_datas) {
+                    if (($count == 4) && ($setting_datas->value == 'N')) {
+                        $check = TRUE;
                     }
-                    if($result){
-                       foreach ($email_setting as $setting_datas){
+                    if ($check) {
+                        if ($count == 5) {
+                            $setting_datas->value = '0';
+                        }
+                    }
 
-                           if($setting_datas->scenario == 'pw'){
+                    $result = $setting_datas->save();
+                    $count++;
+                }
+                if ($result) {
+                    foreach ($email_setting as $setting_datas) {
+
+                        if ($setting_datas->scenario == 'pw') {
 
                             $setting_datas->setting_value = Setting::encrypt($setting_datas->setting_value, 'bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a3');
-
                         }
 
                         $result2 = $setting_datas->save();
                     }
-
-                    }
-                    if($result2){
-                         Yii::$app->session->setFlash('success','Successfully Saved.'); //for success.
-
-                    }
-                    else {
-                        Yii::$app->session->setFlash('danger','Saving not successful.'); //for for wrong event.
-
-                    }
-
-
-                    return $this->redirect(Yii::$app->request->referrer);
-
                 }
+                if ($result2) {
+                    Yii::$app->session->setFlash('success', 'Successfully Saved.'); //for success.
+                } else {
+                    Yii::$app->session->setFlash('danger', 'Saving not successful.'); //for for wrong event.
+                }
+
+
+                return $this->redirect(Yii::$app->request->referrer);
+            }
         }
 
 
-           $password_value =  $sett_pw->setting_value;
+        $password_value = $sett_pw->setting_value;
 
         return $this->render('index', [
-            'setting'=>$setting,
-            'email_setting'=>$email_setting,
-            'password_value'=>$password_value
-
+                    'setting' => $setting,
+                    'email_setting' => $email_setting,
+                    'password_value' => $password_value
         ]);
-
-
     }
 
+    /* action for multiple update date in setting */
 
-    /*action for multiple update date in setting*/
-    public function actionSave()
-    {
+    public function actionSave() {
         $model = new Setting();
 
 
 
 
-        if(Yii::$app->request->isAjax && $model->load($_POST))
-        {
-            Yii::$app->response->format='json';
+        if (Yii::$app->request->isAjax && $model->load($_POST)) {
+            Yii::$app->response->format = 'json';
             return ActiveForm::validate($model);
         }
 
-        if(Yii::$app->request->post())
-        {
-	        //echo "<pre>";
-	       // print_r(Yii::$app->request->post());
-	        //die;
+        if (Yii::$app->request->post()) {
+            //echo "<pre>";
+            // print_r(Yii::$app->request->post());
+            //die;
 
-            $i=0;
-            $j=false;
+            $i = 0;
+            $j = false;
 
-            foreach (Yii::$app->request->post('companyInfo') as $checkBlank)
-            {
-            	if($i<7)
-            	{
-	                if($checkBlank==null)
-	                {
-	                    $j=true;
-	                    Yii::$app->session->setFlash('error');
-	                }
-            	}
-            	$i++;
+            foreach (Yii::$app->request->post('companyInfo') as $checkBlank) {
+                if ($i < 7) {
+                    if ($checkBlank == null) {
+                        $j = true;
+                        Yii::$app->session->setFlash('error');
+                    }
+                }
+                $i++;
             }
 
-            if($j==false)
-            {
+            if ($j == false) {
 
                 $sucess = false;
 //                echo "<pre>";
 //                print_r($_POST['companyInfo']);exit;
-                foreach (Yii::$app->request->post('companyInfo') as $keys=>$values)
-                {
+                foreach (Yii::$app->request->post('companyInfo') as $keys => $values) {
 
                     //query in sql is UPDATE tbl_setting SET value='$values' WHERE code ='$keys'
 
-                    $value = $model::updateAll(['value'=>$values],'code ="'.$keys.'"');
+                    $value = $model::updateAll(['value' => $values], 'code ="' . $keys . '"');
 
 
-                    if($value)
-                    {
+                    if ($value) {
                         $sucess = true;
                     }
                 }
 
 
-                if($sucess)
-                {
+                if ($sucess) {
 
 
-                    Yii::$app->session->setFlash('success','Succesfully Saved.');
-
+                    Yii::$app->session->setFlash('success', 'Succesfully Saved.');
                 }
-
-
             }
-
-
-
         }
 
 
 
 
         return $this->redirect('index');
-
     }
 
-    public function actionCheckemail()
-    {
+    public function actionCheckemail() {
         //to check the validity of email address
         $myData = Yii::$app->request->post();
 
-        $newData =  $myData['datas'];
+        $newData = $myData['datas'];
 
 
 
-        if (filter_var($newData, FILTER_VALIDATE_EMAIL))
-        {
+        if (filter_var($newData, FILTER_VALIDATE_EMAIL)) {
             echo 1;
-        }
-        else
-        {
+        } else {
             echo 0;
         }
     }
-    public function actionCheckinte()
-    {
+
+    public function actionCheckinte() {
         //to check the validity of SMTP Port
         $myData = Yii::$app->request->post();
 
-        $newData =  $myData['datas'];
+        $newData = $myData['datas'];
 
 
 
@@ -348,24 +315,19 @@ class SettingController extends Controller
         if (!filter_var($newData, FILTER_VALIDATE_INT) === false) {
 
             echo 1;
-        }
-        else
-        {
+        } else {
             echo 0;
         }
     }
-
-
 
     /**
      * Displays a single Setting model.
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -374,15 +336,14 @@ class SettingController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new Setting();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -393,22 +354,20 @@ class SettingController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
-    public function actionSms()
-    {
-        mail( '+9779849943390@vtext.com', 'Check', 'You are taking first step ahead.' );
 
+    public function actionSms() {
+        mail('9999@9999.com', 'Check', 'You are taking first step ahead.');
     }
 
     /**
@@ -417,8 +376,7 @@ class SettingController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -431,18 +389,18 @@ class SettingController extends Controller
      * @return Setting the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = Setting::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    public function actionGetMonths(){
-        if (Yii::$app->request->post()){
-            return Setting::HtmlOptionAjax(Yii::$app->request->post()['timeformat']);
 
+    public function actionGetMonths() {
+        if (Yii::$app->request->post()) {
+            return Setting::HtmlOptionAjax(Yii::$app->request->post()['timeformat']);
         }
     }
+
 }

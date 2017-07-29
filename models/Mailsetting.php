@@ -30,7 +30,7 @@ class Mailsetting extends \yii\db\ActiveRecord
         return [
             [['setting_name', 'setting_code', 'setting_value'], 'required'],
             [['setting_name', 'setting_code', 'setting_value'], 'string', 'max' =>255],
-            [['setting_value'], 'string', 'max' =>90,'on'=>['mail_type','imap_path']],
+            [['setting_value'], 'string', 'max' =>90,'on'=>['mail_type','imap_path', 'mail_mode']],
             [['setting_value'], 'integer','on'=>'reload'],
             [['setting_value'], 'integer','on'=>'no_of_mail'],
             [['setting_value'],'match', 'pattern' => '/^[0-9]+\-bit$/', 'message' => 'Invalid input.','on'=>'encode_bit'],
@@ -53,6 +53,11 @@ class Mailsetting extends \yii\db\ActiveRecord
                 case 'mail_type':
                     return [
                                 'setting_value' => 'Mail Type',
+                            ];
+                    break;
+                case 'mail_mode':
+                    return [
+                                'setting_value' => 'Mail Mode',
                             ];
                     break;
                 case 'reload':

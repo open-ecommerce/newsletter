@@ -210,7 +210,7 @@ class MainController extends Controller {
 
             // check if send to all users or the emails of the group
             if (Main::GROUP_ALL_CLIENTS_ID == $model->to_group) {               
-                $to_subscribers = User::getNewsletterList();
+                $to_subscribers = User::getNewsletterList('administrator', $setting[14]['setting_value']);
                 $cc_subscribers = [];
                 $bcc_subscribers = [];
             } else {
@@ -249,14 +249,16 @@ class MainController extends Controller {
             $bcc = str_replace(',,', ',', $bcc);
             $bcc = trim($bcc, ',');
             $message_body = NULL;
+            
+            //EGS: insert message into the template
             if (isset($email_template[0])) {
-                $message_body = $email_template[0]['template_body'];
+                $message_body = str_replace('[[main_text_body]]', $model->text_body, $email_template[0]['template_body']);
             }
 
-            if (isset($saved_email_template[0])) {
-                $message_body = $saved_email_template[0]['template_body'];
-            }
-            $message_body .= $model->text_body;
+//            if (isset($saved_email_template[0])) {
+//                $message_body = $saved_email_template[0]['template_body'];
+//            }
+
             //creating unique id not to delete same attachments for multiple to-subcribers assigned for email created at a time
             $unique_id = uniqid(time());
 
